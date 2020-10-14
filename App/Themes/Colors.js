@@ -21,7 +21,18 @@ const colors = {
   eggplant: '#251a34',
   border: '#483F53',
   banner: '#5F3E63',
-  text: '#E0D7E5'
-}
+  text: '#E0D7E5',
+  primary: '#F46F22',
+  black: '#000000',
+  superDarkGrey: '#212121',
+  darkGrey: '#616161',
+  mediumGrey: '#9E9E9E',
+  lightGrey: '#E0E0E0',
+  superLightGrey: '#ECEFF1',
+  white: '#FFFFFF',
+  error: '#E53935',
+  green: '#4CAF50',
+  lineTableDark: '#424242',
+};
 
-export default colors
+export default colors;
