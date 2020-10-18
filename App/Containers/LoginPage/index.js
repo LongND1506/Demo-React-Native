@@ -12,10 +12,27 @@ import CheckBox from '@react-native-community/checkbox';
 import {Fonts, Images} from '../../Themes';
 import colors from '../../Themes/Colors';
 import PrimaryButton from '../../Components/PrimaryButton';
+import {useFormik} from 'formik';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [currentTabIndex, setTabIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const formSignInControl = useFormik({
+    initialValues: {
+      phone: '',
+      password: '',
+    },
+    onSubmit: () => {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 3000);
+      console.log(formSignInControl.values);
+    },
+  });
+
+  const onNextPage = () => {
+    navigation.navigate('ForgotPassword');
+  };
 
   return (
     <View style={styles.loginPage}>
@@ -50,18 +67,20 @@ const LoginPage = () => {
                 <View style={styles.inputWrapper}>
                   <Text style={styles.label}>Phone Number</Text>
                   <TextInput
-                    multiline={true}
+                    keyboardType="number-pad"
                     style={styles.inputItem}
                     placeholder="Phone Number"
+                    onChangeText={formSignInControl.handleChange('phone')}
                   />
                 </View>
 
                 <View style={styles.inputWrapper}>
                   <Text style={styles.label}>Password</Text>
                   <TextInput
-                    multiline={true}
+                    secureTextEntry={true}
                     style={styles.inputItem}
                     placeholder="Password"
+                    onChangeText={formSignInControl.handleChange('password')}
                   />
                 </View>
 
@@ -76,13 +95,17 @@ const LoginPage = () => {
                     <Text>Remember me</Text>
                   </View>
 
-                  <Text style={styles.linking}>Forgot Password ?</Text>
+                  <Pressable onPress={onNextPage}>
+                    <Text style={styles.linking}>Forgot Password ?</Text>
+                  </Pressable>
                 </View>
 
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     additionStyles={styles.submitButton}
                     text="Sign In"
+                    isLoading={isLoading}
+                    onPress={formSignInControl.handleSubmit}
                   />
                 </View>
               </>
@@ -127,6 +150,7 @@ const LoginPage = () => {
                   <PrimaryButton
                     additionStyles={styles.submitButton}
                     text="Sign Up"
+                    isLoading={isLoading}
                   />
                 </View>
               </>

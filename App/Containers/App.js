@@ -6,6 +6,7 @@ import RootContainer from './RootContainer';
 import createStore from '../Redux';
 import SplashScreen from 'react-native-splash-screen';
 import {setCustomText, setCustomTextInput} from 'react-native-global-props';
+import {Provider as PaperProvider} from 'react-native-paper';
 
 // create our store
 const store = createStore();
@@ -40,7 +41,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <PaperProvider>
+          <RootContainer />
+        </PaperProvider>
       </Provider>
     );
   }

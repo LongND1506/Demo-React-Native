@@ -22,6 +22,7 @@ const images = {
   closeButton: require('../Images/Icons/close-button.png'),
   savingMoney: require('../Images/SavingMoney.png'),
   sutrixLogo: require('../Images/sutrix-logo.png'),
+  securIcon: require('../Images/Icons/icForgotPassword.png'),
 };
 
 export default images;

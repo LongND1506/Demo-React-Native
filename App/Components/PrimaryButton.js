@@ -1,5 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableHighlight} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
 import colors from '../Themes/Colors';
 
 const PrimaryButton = ({
@@ -7,11 +12,21 @@ const PrimaryButton = ({
   additionStyles = {},
   onPress = () => {},
   isDisable = false,
+  isLoading = false,
 }) => (
   <TouchableHighlight
+    disabled={isDisable}
     onPress={onPress}
     style={{...styles.buttonWrapper, ...additionStyles}}>
-    <Text style={styles.buttonText}>{text}</Text>
+    {isLoading ? (
+      <ActivityIndicator
+        animating={isLoading}
+        size="small"
+        color={colors.white}
+      />
+    ) : (
+      <Text style={styles.buttonText}>{text}</Text>
+    )}
   </TouchableHighlight>
 );
 
