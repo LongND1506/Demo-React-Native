@@ -19,7 +19,10 @@ const images = {
   chevronRight: require('../Images/Icons/chevron-right.png'),
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
-  closeButton: require('../Images/Icons/close-button.png')
-}
+  closeButton: require('../Images/Icons/close-button.png'),
+  savingMoney: require('../Images/SavingMoney.png'),
+  sutrixLogo: require('../Images/sutrix-logo.png'),
+  securIcon: require('../Images/Icons/icForgotPassword.png'),
+};
 
-export default images
+export default images;

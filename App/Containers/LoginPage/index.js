@@ -1,118 +1,280 @@
 import React, {useState} from 'react';
-import {Flex, WingBlank, InputItem, Button} from '@ant-design/react-native';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  TextInput,
+  ScrollView,
+} from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
+import {Fonts, Images} from '../../Themes';
+import colors from '../../Themes/Colors';
+import PrimaryButton from '../../Components/PrimaryButton';
 import {useFormik} from 'formik';
-import * as yup from 'yup';
 
-export default function LoginPage() {
-  const initFormValue = {
-    userName: '',
-    password: '',
-  };
-
-  const validationSchema = yup.object().shape({
-    password: yup.string().required('password is required'),
-    userName: yup.string().required('user name is required'),
+const LoginPage = ({navigation}) => {
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [currentTabIndex, setTabIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const formSignInControl = useFormik({
+    initialValues: {
+      phone: '',
+      password: '',
+    },
+    onSubmit: () => {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 3000);
+      console.log(formSignInControl.values);
+    },
   });
 
-  const {
-    values: formValues,
-    handleSubmit,
-    setFieldValue,
-    setFieldTouched,
-    touched,
-    errors,
-  } = useFormik({
-    initialValues: initFormValue,
-    validationSchema,
-  });
-
-  // const handleChange = (e) => console.log(e);
-
-  const handleLogin = () => {
-    console.log(errors, touched);
+  const onNextPage = () => {
+    navigation.navigate('ForgotPassword');
   };
 
   return (
-    <WingBlank style={style.container}>
-      <Flex
-        justify="center"
-        align="center"
-        style={style.formWrapper}
-        direction="column">
-        <Flex justify="center" align="center" direction="column">
-          <Image
-            style={style.formLogo}
-            source={{
-              uri:
-                'https://upload.wikimedia.org/wikipedia/en/thumb/6/61/The_Satanic_Temple.svg/1200px-The_Satanic_Temple.svg.png',
-            }}
-          />
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginVertical: 10}}>
-            Wellcome to the hell, Bitch!!
-          </Text>
-        </Flex>
+    <View style={styles.loginPage}>
+      <ScrollView>
+        <View style={styles.topLogoWrapper}>
+          <Image style={styles.topLogo} source={Images.sutrixLogo} />
+        </View>
+        <View style={styles.savingMoneyWrapper}>
+          <Image style={styles.savingMoneyLogo} source={Images.savingMoney} />
+          <Text style={styles.savingMoneyText}>Saving Money</Text>
+        </View>
+        <View style={styles.form}>
+          {/* Switch Tab Section */}
+          <View style={styles.switchTap}>
+            {['Sign In', 'Sign Up'].map((text, idx) => (
+              <View
+                style={[
+                  styles.switchTapItem,
+                  currentTabIndex === idx ? styles.tabItemActive : {},
+                ]}
+                key={idx}>
+                <Pressable onPress={() => setTabIndex(idx)}>
+                  <Text>{text}</Text>
+                </Pressable>
+              </View>
+            ))}
+          </View>
 
-        <Flex align="center" direction="column" style={{marginVertical: 10}}>
-          <InputItem
-            name="userName"
-            style={{width: '100%'}}
-            type="text"
-            value={formValues.userName}
-            placeholder="User name"
-            onBlur={() => setFieldTouched('userName', true)}
-            onChange={(value) => setFieldValue('userName', value)}
-            error={touched.userName && errors.userName}></InputItem>
+          <View>
+            {currentTabIndex === 0 ? (
+              <>
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.label}>Phone Number</Text>
+                  <TextInput
+                    keyboardType="number-pad"
+                    style={styles.inputItem}
+                    placeholder="Phone Number"
+                    onChangeText={formSignInControl.handleChange('phone')}
+                  />
+                </View>
 
-          {touched.userName && !!errors.userName && (
-            <Flex justify="start" align="start">
-              <Text style={style.errorMessageText}>{errors.userName}</Text>
-            </Flex>
-          )}
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.label}>Password</Text>
+                  <TextInput
+                    secureTextEntry={true}
+                    style={styles.inputItem}
+                    placeholder="Password"
+                    onChangeText={formSignInControl.handleChange('password')}
+                  />
+                </View>
 
-          <InputItem
-            name="password"
-            style={{width: '100%'}}
-            type="password"
-            value={formValues.password}
-            onChange={(value) => setFieldValue('password', value)}
-            onBlur={() => setFieldTouched('password', true)}
-            placeholder="Password"
-            error={touched.password && errors.password}></InputItem>
+                <View style={styles.helperWrapper}>
+                  <View style={styles.formRemember}>
+                    <CheckBox
+                      disabled={false}
+                      tintColor={colors.pr}
+                      value={toggleCheckBox}
+                      onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                    />
+                    <Text>Remember me</Text>
+                  </View>
 
-          {touched.password && !!errors.password && (
-            <Flex justify="start" align="start">
-              <Text style={style.errorMessageText}>{errors.password}</Text>
-            </Flex>
-          )}
-        </Flex>
+                  <Pressable onPress={onNextPage}>
+                    <Text style={styles.linking}>Forgot Password ?</Text>
+                  </Pressable>
+                </View>
 
-        <Flex style={{marginTop: 20}}>
-          <Button
-            onPress={handleLogin}
-            size="large"
-            type="ghost"
-            style={{width: '80%'}}>
-            Go
-          </Button>
-        </Flex>
-      </Flex>
-    </WingBlank>
+                <View style={styles.buttonWrapper}>
+                  <PrimaryButton
+                    additionStyles={styles.submitButton}
+                    text="Sign In"
+                    isLoading={isLoading}
+                    onPress={formSignInControl.handleSubmit}
+                  />
+                </View>
+              </>
+            ) : (
+              <>
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.label}>Name</Text>
+                  <TextInput
+                    multiline={true}
+                    style={styles.inputItem}
+                    placeholder="Enter your name"
+                  />
+                </View>
+
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.label}>Phone number</Text>
+                  <TextInput
+                    multiline={true}
+                    style={styles.inputItem}
+                    placeholder="Enter your phone number"
+                  />
+                </View>
+                <View style={styles.inputWrapper}>
+                  <Text style={styles.label}> Password</Text>
+                  <TextInput
+                    multiline={true}
+                    style={styles.inputItem}
+                    placeholder="Enter your password"
+                  />
+                </View>
+
+                <View style={[styles.inputWrapper, {marginBottom: 20}]}>
+                  <Text style={styles.label}>Confirm password</Text>
+                  <TextInput
+                    multiline={true}
+                    style={styles.inputItem}
+                    placeholder="Enter your password"
+                  />
+                </View>
+
+                <View style={styles.buttonWrapper}>
+                  <PrimaryButton
+                    additionStyles={styles.submitButton}
+                    text="Sign Up"
+                    isLoading={isLoading}
+                  />
+                </View>
+              </>
+            )}
+
+            <View style={styles.policyWrapper}>
+              <Text>By sign in or sign up, you agree to</Text>
+              <Pressable>
+                <Text style={styles.linking}>Sutrix’s Terms</Text>
+              </Pressable>
+              <Text>and</Text>
+
+              <Pressable>
+                <Text style={styles.linking}>Private Policy</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
-}
+};
 
-const style = StyleSheet.create({
-  container: {
-    height: '100%',
+export default LoginPage;
+
+const styles = StyleSheet.create({
+  loginPage: {
+    padding: 10,
+    flex: 1,
+    backgroundColor: colors.primary,
   },
-  formWrapper: {
-    height: '100%',
+  topLogoWrapper: {
+    flex: 1,
+    marginHorizontal: 10,
   },
-  formLogo: {
-    width: 100,
-    height: 100,
+  topLogo: {
+    width: 150,
+    height: 30,
   },
-  errorMessageText: {
-    color: 'red',
+  savingMoneyWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    textTransform: 'uppercase',
+  },
+  savingMoneyLogo: {
+    width: 70,
+    height: 70,
+    marginBottom: 20,
+  },
+  savingMoneyText: {
+    color: colors.white,
+    fontSize: Fonts.size.h3,
+  },
+  form: {
+    backgroundColor: colors.white,
+    padding: 20,
+    borderRadius: 5,
+    shadowColor: colors.darkGrey,
+  },
+  switchTap: {
+    width: '100%',
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  switchTapItem: {
+    marginRight: 15,
+    padding: 5,
+    fontSize: 10,
+    opacity: 0.6,
+    fontWeight: 'bold',
+    fontFamily: Fonts.type.svn,
+  },
+  tabItemActive: {
+    borderBottomColor: colors.primary,
+    borderBottomWidth: 4,
+    opacity: 1,
+  },
+  inputWrapper: {
+    marginTop: 20,
+  },
+  inputItem: {
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 5,
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: colors.white,
+  },
+  label: {
+    fontWeight: '300',
+    fontSize: 14,
+    fontFamily: Fonts.type.svn,
+  },
+  helperWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+  },
+  formRemember: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonWrapper: {
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  submitButton: {
+    width: 152,
+    height: 55,
+    justifyContent: 'center',
+  },
+  linking: {
+    color: colors.primary,
+    fontWeight: 'bold',
+    paddingHorizontal: 5,
+  },
+  policyWrapper: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
