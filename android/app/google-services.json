@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "745040901085",
+    "firebase_url": "https://saving-money-cf83e.firebaseio.com",
+    "project_id": "saving-money-cf83e",
+    "storage_bucket": "saving-money-cf83e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745040901085:android:748c074e40633c5ae53c34",
+        "android_client_info": {
+          "package_name": "com.demoreacnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745040901085-j4fov4k7i0sua9jajv0ifl2sopdf4rn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.demoreacnative",
+            "certificate_hash": "8437d112ea4be003cbc10627eac823cdcde7b2f2"
+          }
+        },
+        {
+          "client_id": "745040901085-1106l724v1fb73efukrltgr49c57ej8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx7-fIC7TgswQJ225Po5XSyuxZFlDv_94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745040901085-1106l724v1fb73efukrltgr49c57ej8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
