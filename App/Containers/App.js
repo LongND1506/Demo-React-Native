@@ -6,11 +6,17 @@ import RootContainer from './RootContainer';
 import createStore from '../Redux';
 import SplashScreen from 'react-native-splash-screen';
 import {setCustomText, setCustomTextInput} from 'react-native-global-props';
-import {Provider as PaperProvider} from 'react-native-paper';
-
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 // create our store
 const store = createStore();
-
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    accent: 'yellow',
+  },
+};
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
  * call this component first.
@@ -40,7 +46,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={store} theme={theme}>
         <PaperProvider>
           <RootContainer />
         </PaperProvider>

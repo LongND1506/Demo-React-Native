@@ -4,6 +4,7 @@ import ForgotPassword from '../Containers/ForgotPassword';
 import LoginPage from '../Containers/LoginPage';
 import {Easing, Animated} from 'react-native';
 import styles from './Styles/NavigationStyles';
+import OtpVerify from '../Containers/OtpVerify';
 
 const transitionConfig = () => {
   return {
@@ -38,6 +39,9 @@ const PrimaryNav = createStackNavigator(
     LaunchScreen: {screen: LoginPage},
     ForgotPassword: {
       screen: ForgotPassword,
+    },
+    OtpVerify: {
+      screen: OtpVerify,
     },
   },
   {

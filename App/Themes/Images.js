@@ -23,6 +23,8 @@ const images = {
   savingMoney: require('../Images/SavingMoney.png'),
   sutrixLogo: require('../Images/sutrix-logo.png'),
   securIcon: require('../Images/Icons/icForgotPassword.png'),
+  icBackWhite: require('../Images/Icons/icBack.png'),
+  icOtp: require('../Images/Icons/icOTP.png'),
 };
 
 export default images;

@@ -151,6 +151,7 @@ const LoginPage = ({navigation}) => {
                     additionStyles={styles.submitButton}
                     text="Sign Up"
                     isLoading={isLoading}
+                    onPress={() => navigation.navigate('OtpVerify')}
                   />
                 </View>
               </>
